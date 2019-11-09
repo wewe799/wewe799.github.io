@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>#用C语言使数组中个数向后顺移m个位置 (1) | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="**上周在学姐的帮助之下我成功的搭建了自己的的一个博客，我以后会多多用它来记录自己学习中的收获与体会。现在我就记录一下这周自己用C语言数组的知识编写一个程序，实现将n个整数中前面个数顺序向后移m个位置，最后m个数变成最前面的m个数。 经过思考想通过先让每个数向后移一位，再使此步骤循环m次的方法来实现，首次打出的代码如下。**我还在思考有没有其他的方法来解决这个问题 1234567891011121">
+<meta property="og:type" content="article">
+<meta property="og:title" content="#用C语言使数组中个数向后顺移m个位置 (1)">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;09&#x2F;#%E7%94%A8C%E8%AF%AD%E8%A8%80%E4%BD%BF%E6%95%B0%E7%BB%84%E4%B8%AD%E4%B8%AA%E6%95%B0%E5%90%91%E5%90%8E%E9%A1%BA%E7%A7%BBm%E4%B8%AA%E4%BD%8D%E7%BD%AE%20(1)&#x2F;index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="**上周在学姐的帮助之下我成功的搭建了自己的的一个博客，我以后会多多用它来记录自己学习中的收获与体会。现在我就记录一下这周自己用C语言数组的知识编写一个程序，实现将n个整数中前面个数顺序向后移m个位置，最后m个数变成最前面的m个数。 经过思考想通过先让每个数向后移一位，再使此步骤循环m次的方法来实现，首次打出的代码如下。**我还在思考有没有其他的方法来解决这个问题 1234567891011121">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-11-09T08:05:42.672Z">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-#用C语言使数组中个数向后顺移m个位置 (1)" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/09/#%E7%94%A8C%E8%AF%AD%E8%A8%80%E4%BD%BF%E6%95%B0%E7%BB%84%E4%B8%AD%E4%B8%AA%E6%95%B0%E5%90%91%E5%90%8E%E9%A1%BA%E7%A7%BBm%E4%B8%AA%E4%BD%8D%E7%BD%AE%20(1)/" class="article-date">
+  <time datetime="2019-11-09T08:05:42.642Z" itemprop="datePublished">2019-11-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      #用C语言使数组中个数向后顺移m个位置 (1)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>**上周在学姐的帮助之下我成功的搭建了自己的的一个博客，我以后会多多用它来记录自己学习中的收获与体会。现在我就记录一下这周自己用C语言数组的知识编写一个程序，实现将n个整数中前面个数顺序向后移m个位置，最后m个数变成最前面的m个数。</p>
+<p>经过思考想通过先让每个数向后移一位，再使此步骤循环m次的方法来实现，首次打出的代码如下。**我还在思考有没有其他的方法来解决这个问题</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 20 </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> <span class="keyword">int</span> i,j,a[N],m,n;</span><br><span class="line"> <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>,&amp;n,&amp;m);   <span class="comment">/*输入n，为数组元素数，应小于20 */</span> </span><br><span class="line"> <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;a[i]);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">for</span>(j=<span class="number">1</span>;j&lt;=m;j++)    <span class="comment">/*重复m次循环*/</span> </span><br><span class="line"> &#123; </span><br><span class="line">  </span><br><span class="line">  <span class="keyword">for</span>(i=n;i&gt;<span class="number">0</span>;i--)   <span class="comment">/*将数组中每个数向后移一位，最后一个变为第一个*/</span> </span><br><span class="line">  &#123;</span><br><span class="line">    a[i]=a[i<span class="number">-1</span>]; </span><br><span class="line">     &#125;</span><br><span class="line">     a[<span class="number">0</span>]=a[n];</span><br><span class="line"> &#125;</span><br><span class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">  &#123;</span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"%d "</span>,a[i]);</span><br><span class="line">  &#125;</span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>后来发现可以在代码中添加函数的元素</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">move</span><span class="params">(<span class="keyword">int</span> *a,<span class="keyword">int</span> n,<span class="keyword">int</span> m)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> t[<span class="number">100</span>];</span><br><span class="line"> <span class="keyword">int</span> i;</span><br><span class="line"> <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line"> &#123;</span><br><span class="line">  t[i]=a[i];</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;m;i++)</span><br><span class="line"> &#123;</span><br><span class="line">  a[i]=t[n-m+i];</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">for</span>(i=m;i&lt;n;i++)</span><br><span class="line"> &#123;</span><br><span class="line">  a[i]=t[i-m];</span><br><span class="line"> &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> <span class="keyword">int</span> a[<span class="number">20</span>];</span><br><span class="line"> <span class="keyword">int</span> n,m;</span><br><span class="line"> <span class="keyword">int</span> i;</span><br><span class="line"> <span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;n,&amp;m)!=EOF)</span><br><span class="line"> &#123;</span><br><span class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">  &#123;</span><br><span class="line">   <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;a[i]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">move</span>(a,n,m);</span><br><span class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n<span class="number">-1</span>;i++)</span><br><span class="line">  &#123;</span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">"%d "</span>,a[i]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,a[i]);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/09/#%E7%94%A8C%E8%AF%AD%E8%A8%80%E4%BD%BF%E6%95%B0%E7%BB%84%E4%B8%AD%E4%B8%AA%E6%95%B0%E5%90%91%E5%90%8E%E9%A1%BA%E7%A7%BBm%E4%B8%AA%E4%BD%8D%E7%BD%AE%20(1)/" data-id="ck2ragu8z0000xwus7rti4wfp" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/11/02/A/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">A</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/11/09/#%E7%94%A8C%E8%AF%AD%E8%A8%80%E4%BD%BF%E6%95%B0%E7%BB%84%E4%B8%AD%E4%B8%AA%E6%95%B0%E5%90%91%E5%90%8E%E9%A1%BA%E7%A7%BBm%E4%B8%AA%E4%BD%8D%E7%BD%AE%20(1)/">#用C语言使数组中个数向后顺移m个位置 (1)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/02/A/">A</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/02/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
